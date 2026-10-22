@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import loginMain from "../screens/login.main.js"
 import { environment } from "../envi/environment.js";
+import { LoginMessages } from "../messages/login.js";
 import AllureReporter from "@wdio/allure-reporter";
 import { resetApp } from "../helper/session.js";
 
@@ -40,7 +41,7 @@ describe('Login', () => {
             });
 
             expect(await loginMain.isErrMsgDisplayed()).to.be.true;
-            expect(await loginMain.getErrMsg()).to.equal('•メールアドレスまたは、パスワードに誤りがあります。');
+            expect(await loginMain.getErrMsg()).to.equal(LoginMessages.invalidCredentials);
         });
 
         it('should successfully login using valid credentials', async() => {

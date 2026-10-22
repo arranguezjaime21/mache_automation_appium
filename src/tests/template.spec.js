@@ -2,6 +2,7 @@ import { expect } from "chai";
 import templateMain from "../screens/template.main.js"
 import AllureReporter from "@wdio/allure-reporter";
 import { MediaFixture, pushMediaFixture } from "../helper/media.js";
+import { TemplateMessages } from "../messages/template.js";
 
 describe('Template Settings', () => {
     // Unique per test so cleanup only ever deletes what the test itself created
@@ -42,17 +43,17 @@ describe('Template Settings', () => {
             {
                 section: 'template creation',
                 open: () => templateMain.creationHelpDialog(),
-                text: '設定後はやり取りしたことがない相手のメッ\nセージ画面に表示され簡単に送信できます。'
+                text: TemplateMessages.createHelp
             },
             {
                 section: 'follow thank-you message',
                 open: () => templateMain.followHelpDialog(),
-                text: 'フォローされると自動で相手に送られる\nお礼メッセージです。'
+                text: TemplateMessages.followHelp
             },
             {
                 section: 'recommended template',
                 open: () => templateMain.templateHelpDialog(),
-                text: '作成に困ったらおすすめテンプレートに写真\nを添付して簡単に設定できます。'
+                text: TemplateMessages.templateHelp
             },
         ];
 
@@ -74,7 +75,7 @@ describe('Template Settings', () => {
             const before = await templateMain.getTemplateCount();
 
             await templateMain.createTemplate(templateText);
-            expect(await templateMain.getSavedMsg()).to.equal('テンプレートを保存しました');
+            expect(await templateMain.getSavedMsg()).to.equal(TemplateMessages.saved);
             await templateMain.closeSavedDialog();
 
             expect(await templateMain.waitForTemplateCount(before.current + 1)).to.be.true;
@@ -113,7 +114,7 @@ describe('Template Settings', () => {
                 const before = await templateMain.getTemplateCount();
 
                 await templateMain.createTemplate(templateText, media);
-                expect(await templateMain.getSavedMsg()).to.equal('テンプレートを保存しました');
+                expect(await templateMain.getSavedMsg()).to.equal(TemplateMessages.saved);
                 await templateMain.closeSavedDialog();
 
                 expect(await templateMain.waitForTemplateCount(before.current + 1)).to.be.true;
@@ -130,12 +131,12 @@ describe('Template Settings', () => {
             {
                 length: 'under 3 seconds',
                 fixture: MediaFixture.videoShort,
-                error: '秒数不足のためアップロードできません。\n 3秒から15秒までの動画を再度アップロードしてください。'
+                error: TemplateMessages.videoTooShort
             },
             {
                 length: 'over 15 seconds',
                 fixture: MediaFixture.videoLong,
-                error: '許容サイズを超えたためアップロードできませんでした。\n\nアップロードできる動画ですが、50MB以内または15秒以内となります。動画を編集し再度アップロードをお願い致します。'
+                error: TemplateMessages.videoTooLong
             },
         ];
 
