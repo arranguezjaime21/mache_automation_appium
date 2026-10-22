@@ -110,8 +110,9 @@ class TemplateMain extends BasePage {
         await this.click(this.selector.saveTemplate);
     };
 
-    async getSavedMsg() {
-        return await this.getText(this.selector.savedMsg);
+    // Saving uploads any attached media first, so the dialog can take longer than the default wait
+    async getSavedMsg() { 
+        return await this.getText(this.selector.savedMsg, 30000);
     };
 
     async closeSavedDialog() {
@@ -119,10 +120,70 @@ class TemplateMain extends BasePage {
         await this.isElementGone(this.selector.savedOk);
     };
 
-    async createTemplate(text) {
+    async createTemplate(text, { image = false, video = false } = {}) { 
         await this.openCreateTemplate();
         await this.inputTemplateContent(text);
+        if(image) await this.attachImageFromGallery();
+        if(video) await this.attachVideoFromGallery();
         await this.saveTemplate();
+    };
+
+    // Picks the newest photo, i.e. the fixture pushed by pushMediaFixture()
+    async attachImageFromGallery() { 
+        await this.click(this.selector.uploadImage);
+        await this.click(this.selector.uploadFromGallery);
+        await this.click(this.selector.pickerFirstPhoto);
+        await this.click(this.selector.pickerDone);
+        await this.click(this.selector.cropUsePhoto);
+        await this.waitAndFindVisible(this.selector.attachedImage, 20000);
+    };
+
+    // Picks the newest video, i.e. the fixture pushed by pushMediaFixture(); videos skip the crop screen
+    async pickVideoFromGallery() { 
+        await this.click(this.selector.uploadVideo);
+        await this.click(this.selector.uploadFromGallery);
+        await this.click(this.selector.pickerFirstVideo);
+        await this.click(this.selector.pickerDone);
+    };
+
+    async attachVideoFromGallery() { 
+        await this.pickVideoFromGallery();
+        await this.waitAndFindVisible(this.selector.attachedVideo, 20000);
+    };
+
+    async getUploadErrorMsg() { 
+        return await this.getText(this.selector.uploadErrorMsg, 20000);
+    };
+
+    async closeUploadError() { 
+        await this.click(this.selector.uploadErrorOk);
+        await this.isElementGone(this.selector.uploadErrorOk);
+    };
+
+    // Recovery for a failed test that left the create form open; a form with content asks to discard first
+    async discardCreateIfOpen() { 
+        if(!(await this.isElementVisible(this.selector.createTitle, 1000))) return;
+        await this.click(this.selector.cancelCreate);
+        if(await this.isElementVisible(this.selector.discardConfirm, 2000)) {
+            await this.click(this.selector.discardConfirm);
+        }
+        await this.waitAndFindVisible(this.selector.createHeader, 30000);
+    };
+
+    async isImageAttached() { 
+        return await this.isElementVisible(this.selector.attachedImage);
+    };
+
+    async isVideoAttached(timeout) { 
+        return await this.isElementVisible(this.selector.attachedVideo, timeout);
+    };
+
+    async isTemplateImageDisplayed(text) { 
+        return await this.isElementVisible(this.selector.imageByText(text));
+    };
+
+    async isTemplateVideoDisplayed(text) { 
+        return await this.isElementVisible(this.selector.videoByText(text));
     };
 
     async isTemplateDisplayed(text, timeout) {

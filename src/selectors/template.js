@@ -14,6 +14,8 @@ export const TemplateSelector = {
     // Template creation (テンプレート作成)
     createTemplate: 'id=com.fdc_machetalk_broadcaster:id/create_template_clickable',
     createTitle: 'id=com.fdc_machetalk_broadcaster:id/tv_header_title', //テンプレート作成
+    cancelCreate: 'id=com.fdc_machetalk_broadcaster:id/tv_cancel', //キャンセル → テンプレートを破棄 dialog when content was entered
+    discardConfirm: 'id=com.fdc_machetalk_broadcaster:id/rl_dialog_confirm', //破棄
     inputContent: 'id=com.fdc_machetalk_broadcaster:id/et_template_content',
     contentCount: 'id=com.fdc_machetalk_broadcaster:id/tv_count_content', //0 ( / 300 )
     saveTemplate: 'id=com.fdc_machetalk_broadcaster:id/right_button',
@@ -24,4 +26,23 @@ export const TemplateSelector = {
     templateByText: (text) => `//android.widget.TextView[@resource-id="com.fdc_machetalk_broadcaster:id/tv_content" and @text="${text}"]`,
     deleteByText: (text) => `//android.widget.TextView[@resource-id="com.fdc_machetalk_broadcaster:id/tv_content" and @text="${text}"]/ancestor::*[@resource-id="com.fdc_machetalk_broadcaster:id/template_clickable"][1]//*[@resource-id="com.fdc_machetalk_broadcaster:id/btn_delete"]`,
     deleteConfirm: 'id=com.fdc_machetalk_broadcaster:id/rl_dialog_confirm', //削除
+
+    // Media attachments on the create form
+    uploadImage: 'id=com.fdc_machetalk_broadcaster:id/rl_template_image',
+    uploadVideo: 'id=com.fdc_machetalk_broadcaster:id/rl_template_video',
+    uploadFromGallery: 'id=com.fdc_machetalk_broadcaster:id/tv_gallery', //フォトライブラリ
+    cropUsePhoto: 'id=com.fdc_machetalk_broadcaster:id/tv_use_photo', //選択
+    attachedImage: 'id=com.fdc_machetalk_broadcaster:id/template_img', //replaces img_empty_template once attached
+    attachedVideo: 'id=com.fdc_machetalk_broadcaster:id/video_thumbnail',
+    uploadErrorMsg: 'id=com.fdc_machetalk_broadcaster:id/message', //秒数不足のため… (<3s) / 許容サイズを超えたため… (>15s or >50MB)
+    uploadErrorOk: 'id=com.fdc_machetalk_broadcaster:id/confirmButton',
+
+    // Android system photo picker (no resource ids; device language is English)
+    pickerFirstPhoto: '(//*[starts-with(@content-desc, "Photo taken on")])[1]',
+    pickerFirstVideo: '(//*[starts-with(@content-desc, "Video taken on")])[1]',
+    pickerDone: '//android.widget.TextView[@text="Done"]',
+
+    // Media shown on a created template card
+    imageByText: (text) => `//android.widget.TextView[@resource-id="com.fdc_machetalk_broadcaster:id/tv_content" and @text="${text}"]/ancestor::*[@resource-id="com.fdc_machetalk_broadcaster:id/template_clickable"][1]//*[@resource-id="com.fdc_machetalk_broadcaster:id/template_img"]`,
+    videoByText: (text) => `//android.widget.TextView[@resource-id="com.fdc_machetalk_broadcaster:id/tv_content" and @text="${text}"]/ancestor::*[@resource-id="com.fdc_machetalk_broadcaster:id/template_clickable"][1]//*[@resource-id="com.fdc_machetalk_broadcaster:id/video_thumbnail"]`,
 }
