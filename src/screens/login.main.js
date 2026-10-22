@@ -40,8 +40,8 @@ class LoginMain extends BasePage {
          return await this.isElementVisible(this.selector.errMsg);
     }
 
-    async isPermissionDisplayed() { 
-        return await this.isElementVisible(this.selector.permission);
+    async isPermissionDisplayed(timeout) { 
+        return await this.isElementVisible(this.selector.permission, timeout);
     }
     
 }
