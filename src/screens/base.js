@@ -38,8 +38,8 @@ export class BasePage {
         await el.setValue(value);
     };
 
-    async getText(selector) {
-        const el = await this.waitAndFindVisible(selector);
+    async getText(selector, timeout) { 
+        const el = await this.waitAndFindVisible(selector, timeout);
         return await el.getText();
     };
 
