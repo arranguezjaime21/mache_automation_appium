@@ -1,4 +1,0 @@
-{
-  "using": "xpath",
-  "value": "(//android.widget.ImageView[@resource-id=\"com.fdc_machetalk_broadcaster:id/icon\"])[5]"
-}

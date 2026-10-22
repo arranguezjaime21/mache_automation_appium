@@ -1,15 +1,11 @@
 import { expect } from "chai";
 import permission from "../screens/permission.js"
 import AllureReporter from "@wdio/allure-reporter";
-import { resetAndLogin } from "../helper/session.js";
 
 // The tests below walk through the permission dialog in order (camera → mic → bluetooth → notification),
 // so the setup runs once per spec rather than per test.
 describe('App Permission', () => {
 
-    before(async () => {
-        await resetAndLogin();
-    });
 
     afterEach(async function() {
         if(this.currentTest.state === 'failed') { 

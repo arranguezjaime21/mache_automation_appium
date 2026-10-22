@@ -5,9 +5,9 @@ export class BasePage {
         return el;
     };
 
-    async waitAndFindVisible(selector) {
+    async waitAndFindVisible(selector, timeout) {
         const el = $(selector);
-        await el.waitForDisplayed();
+        await el.waitForDisplayed({ timeout });
         return el;
     };
 
