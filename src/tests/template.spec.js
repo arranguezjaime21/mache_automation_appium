@@ -1,7 +1,8 @@
 import { expect } from "chai";
 import templateMain from "../screens/template.main.js"
 import AllureReporter from "@wdio/allure-reporter";
-import { MediaFixture, pushMediaFixture } from "../helper/media.js";
+import { pushMediaFixture } from "../helper/media.js";
+import { MediaFixture } from "../fixtures/media.js";
 import { TemplateMessages } from "../messages/template.js";
 
 describe('Template Settings', () => {
