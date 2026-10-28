@@ -6,5 +6,3 @@ export async function resetApp() {
     await driver.execute('mobile: clearApp', { appId: environment.appiumPackage });
     await driver.activateApp(environment.appiumPackage);
 };
-
-

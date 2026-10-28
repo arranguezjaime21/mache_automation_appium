@@ -31,16 +31,10 @@ export const TemplateSelector = {
     uploadImage: 'id=com.fdc_machetalk_broadcaster:id/rl_template_image',
     uploadVideo: 'id=com.fdc_machetalk_broadcaster:id/rl_template_video',
     uploadFromGallery: 'id=com.fdc_machetalk_broadcaster:id/tv_gallery', //フォトライブラリ
-    cropUsePhoto: 'id=com.fdc_machetalk_broadcaster:id/tv_use_photo', //選択
     attachedImage: 'id=com.fdc_machetalk_broadcaster:id/template_img', //replaces img_empty_template once attached
     attachedVideo: 'id=com.fdc_machetalk_broadcaster:id/video_thumbnail',
     uploadErrorMsg: 'id=com.fdc_machetalk_broadcaster:id/message', //秒数不足のため… (<3s) / 許容サイズを超えたため… (>15s or >50MB)
     uploadErrorOk: 'id=com.fdc_machetalk_broadcaster:id/confirmButton',
-
-    // Android system photo picker (no resource ids; device language is English)
-    pickerFirstPhoto: '(//*[starts-with(@content-desc, "Photo taken on")])[1]',
-    pickerFirstVideo: '(//*[starts-with(@content-desc, "Video taken on")])[1]',
-    pickerDone: '//android.widget.TextView[@text="Done"]',
 
     // Media shown on a created template card
     imageByText: (text) => `//android.widget.TextView[@resource-id="com.fdc_machetalk_broadcaster:id/tv_content" and @text="${text}"]/ancestor::*[@resource-id="com.fdc_machetalk_broadcaster:id/template_clickable"][1]//*[@resource-id="com.fdc_machetalk_broadcaster:id/template_img"]`,
