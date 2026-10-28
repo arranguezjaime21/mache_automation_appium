@@ -4,9 +4,24 @@ import { BasePage } from "./base.js";
 class Permission extends BasePage { 
     selector = PermissionSelector;
 
+    // A tap made while a new session is relaunching the app can be lost, so tap the app's button
+    // again until the system dialog shows. Only taps while the button is visible, so a retry never
+    // lands on the system dialog itself.
+    async requestPermission(button, allowSelector) { 
+        await browser.waitUntil(async() => {
+            if(await this.isElementVisible(allowSelector, 3000)) return true;
+            if(await this.isElementVisible(button, 1000)) await $(button).click();
+            return false;
+        }, {
+            timeout: 30000,
+            interval: 1000,
+            timeoutMsg: `system permission dialog did not open from ${button}`
+        });
+        await this.click(allowSelector);
+    };
+
     async allowCamera() {
-        await this.click(this.selector.camera);
-        await this.click(this.selector.allowPermission);
+        await this.requestPermission(this.selector.camera, this.selector.allowPermission);
     };
 
     async isCameraPermissionDisabled() { 
@@ -14,8 +29,7 @@ class Permission extends BasePage {
     };
 
     async allowMic() { 
-        await this.click(this.selector.mic);
-        await this.click(this.selector.allowPermission);
+        await this.requestPermission(this.selector.mic, this.selector.allowPermission);
     };
 
     async isMicPermissionDisabled() { 
@@ -23,8 +37,7 @@ class Permission extends BasePage {
     };
 
     async allowBluetooth() { 
-        await this.click(this.selector.bluetooth);
-        await this.click(this.selector.allowBtn);
+        await this.requestPermission(this.selector.bluetooth, this.selector.allowBtn);
     };
 
     async allowNotif() { 

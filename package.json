@@ -7,6 +7,7 @@
   "scripts": {
     "test:template": "wdio run ./config/wdio.conf.js --spec ./src/tests/template.spec.js",
     "test:login":  "wdio run ./config/wdio.conf.js --spec ./src/tests/login.spec.js",
+    "test:timeline": "wdio run ./config/wdio.conf.js --spec ./src/tests/timeline.spec.js",
     "test:all": "wdio run ./config/wdio.conf.js",
     "allure:generate": "npx allure generate allure-results -o allure-report",
     "allure:open": "npx allure open allure-report",

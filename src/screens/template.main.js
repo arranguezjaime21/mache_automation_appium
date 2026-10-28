@@ -1,5 +1,6 @@
 import { TemplateSelector } from "../selectors/template.js";
 import { BasePage } from "./base.js";
+import photoPicker from "./photo.picker.js";
 
 class TemplateMain extends BasePage { 
     selector = TemplateSelector;
@@ -132,9 +133,7 @@ class TemplateMain extends BasePage {
     async attachImageFromGallery() { 
         await this.click(this.selector.uploadImage);
         await this.click(this.selector.uploadFromGallery);
-        await this.click(this.selector.pickerFirstPhoto);
-        await this.click(this.selector.pickerDone);
-        await this.click(this.selector.cropUsePhoto);
+        await photoPicker.pickNewestPhoto();
         await this.waitAndFindVisible(this.selector.attachedImage, 20000);
     };
 
@@ -142,8 +141,7 @@ class TemplateMain extends BasePage {
     async pickVideoFromGallery() { 
         await this.click(this.selector.uploadVideo);
         await this.click(this.selector.uploadFromGallery);
-        await this.click(this.selector.pickerFirstVideo);
-        await this.click(this.selector.pickerDone);
+        await photoPicker.pickNewestVideo();
     };
 
     async attachVideoFromGallery() { 

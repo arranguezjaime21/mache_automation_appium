@@ -9,6 +9,7 @@ export const config = {
         "../src/tests/login.spec.js",
         "../src/tests/permission.spec.js",
         "../src/tests/template.spec.js",
+        "../src/tests/timeline.spec.js",
     ],
     // Patterns to exclude.
     exclude: [
